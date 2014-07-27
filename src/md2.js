@@ -1,5 +1,5 @@
 /*
- * js-md5 v0.1.0
+ * js-md5 v0.1.1
  * https://github.com/emn178/js-md2
  *
  * Copyright 2014, emn178@gmail.com
@@ -67,7 +67,7 @@
   
   var hasUTF8 = function(message) {
     for(var i = message.length;i--;)
-      if(message.charCodeAt(i) > 255)
+      if(message.charCodeAt(i) > 127)
         return true;
     return false;
   };
