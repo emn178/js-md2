@@ -1,7 +1,7 @@
 # js-md2
-[![Build Status](https://api.travis-ci.org/emn178/js-md5.png)](https://travis-ci.org/emn178/js-md5)
-[![Build Status](https://coveralls.io/repos/emn178/js-md5/badge.png?branch=master)](https://coveralls.io/r/emn178/js-md5?branch=master)  
-[![NPM](https://nodei.co/npm/js-md5.png?stars&downloads)](https://nodei.co/npm/js-md5/)  
+[![Build Status](https://api.travis-ci.org/emn178/js-md2.png)](https://travis-ci.org/emn178/js-md2)
+[![Build Status](https://coveralls.io/repos/emn178/js-md2/badge.png?branch=master)](https://coveralls.io/r/emn178/js-md2?branch=master)  
+[![NPM](https://nodei.co/npm/js-md2.png?stars&downloads)](https://nodei.co/npm/js-md2/)  
 A simple MD2 hash function for JavaScript supports UTF-8 encoding.
 
 ## Demo
