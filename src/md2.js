@@ -1,22 +1,16 @@
 /*
- * js-md5 v0.1.1
+ * js-md5 v0.1.2
  * https://github.com/emn178/js-md2
  *
- * Copyright 2014, emn178@gmail.com
+ * Copyright 2014-2015, emn178@gmail.com
  *
  * Licensed under the MIT license:
  * http://www.opensource.org/licenses/MIT
  */
-
-;(function(root, undefined){
+;(function(root, undefined) {
   'use strict';
 
-  var HEX_CHARS = "0123456789abcdef";
-  var HEX_TABLE = {
-    '0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9,
-    'a': 10, 'b': 11, 'c': 12, 'd': 13, 'e': 14, 'f': 15,
-    'A': 10, 'B': 11, 'C': 12, 'D': 13, 'E': 14, 'F': 15
-  };
+  var HEX_CHARS = '0123456789abcdef'.split('');
 
   var S = [ 0x29, 0x2E, 0x43, 0xC9, 0xA2, 0xD8, 0x7C, 0x01, 0x3D, 0x36, 0x54, 0xA1, 0xEC, 0xF0, 0x06, 0x13,
             0x62, 0xA7, 0x05, 0xF3, 0xC0, 0xC7, 0x73, 0x8C, 0x98, 0x93, 0x2B, 0xD9, 0xBC, 0x4C, 0x82, 0xCA, 
@@ -35,99 +29,114 @@
             0xF2, 0xEF, 0xB7, 0x0E, 0x66, 0x58, 0xD0, 0xE4, 0xA6, 0x77, 0x72, 0xF8, 0xEB, 0x75, 0x4B, 0x0A, 
             0x31, 0x44, 0x50, 0xB4, 0x8F, 0xED, 0x1F, 0x1A, 0xDB, 0x99, 0x8D, 0x33, 0x9F, 0x11, 0x83, 0x14];
 
-  var md2 = function(message) {
-    var M = hasUTF8(message) ? UTF8toBlocks(message) : ASCIItoBlocks(message);
+  var md2 = function(message, asciiOnly) {
+    var M, X = [], i, j;
+    if(!asciiOnly && /[^\x00-\x7F]/.test(message)) {
+      M = getBlocksFromUtf8(message);
+    } else {
+      M = getBlocksFromAscii(message);
+    }
     appendChecksum(M);
 
-    var X = [];
-    for(var i = 0;i < 48;++i)
+    for(i = 0;i < 48;++i) {
       X[i] = 0;
-    var length = M.length >> 4;
-    for(var i = 0;i < length;++i)
-    {
-      for(var j = 0;j < 16;++j)
-      {
+    }
+    var length = M.length >> 4, hex = '';
+    for(i = 0;i < length;++i) {
+      for(j = 0;j < 16;++j) {
         X[16 + j] = M[(i << 4) + j];
         X[32 + j] = X[16 + j] ^ X[j];
       }
       var t = 0;
-      for(var j = 0;j < 18;++j)
-      {
-        for(var k = 0;k < 48;++k)
+      for(j = 0;j < 18;++j) {
+        for(var k = 0;k < 48;++k) {
           X[k] = t = X[k] ^ S[t];
+        }
         t = (t + j) & 0xFF;
       }
     }
 
-    var hex = '';
-    for(var i = 0;i < 16;++i)
-      hex += HEX_CHARS.charAt((X[i] >> 4) & 0x0F) + HEX_CHARS.charAt(X[i] & 0x0F);
+    for(i = 0;i < 16;++i) {
+      hex += HEX_CHARS[(X[i] >> 4) & 0x0F] + HEX_CHARS[X[i] & 0x0F];
+    }
     return hex;
   };
   
-  var hasUTF8 = function(message) {
-    for(var i = message.length;i--;)
-      if(message.charCodeAt(i) > 127)
-        return true;
-    return false;
+  var getBytesFromUtf8 = function(str) {
+    var bytes = [], index = 0;
+    for (var i = 0;i < str.length; i++) {
+      var c = str.charCodeAt(i);
+      if (c < 0x80) {
+        bytes[index++] = c;
+      } else if (c < 0x800) {
+        bytes[index++] = 0xc0 | (c >> 6);
+        bytes[index++] = 0x80 | (c & 0x3f);
+      } else if (c < 0xd800 || c >= 0xe000) {
+        bytes[index++] = 0xe0 | (c >> 12);
+        bytes[index++] = 0x80 | ((c >> 6) & 0x3f);
+        bytes[index++] = 0x80 | (c & 0x3f);
+      } else {
+        c = 0x10000 + (((c & 0x3ff) << 10) | (str.charCodeAt(++i) & 0x3ff));
+        bytes[index++] = 0xf0 | (c >> 18);
+        bytes[index++] = 0x80 | ((c >> 12) & 0x3f);
+        bytes[index++] = 0x80 | ((c >> 6) & 0x3f);
+        bytes[index++] = 0x80 | (c & 0x3f);
+      }
+    }
+    return bytes;
   };
 
-  var ASCIItoBlocks = function(message) {
+  var getBlocksFromAscii = function(message) {
     // a block is 8 bits(1 bytes), a chunk is 128 bits(16 bytes)
     var length = message.length;
     var chunkCount = (length >> 4) + 1;
     var blockCount = chunkCount << 4; // chunkCount * 16
-    var blocks = [];
-    var i;
-    for(i = 0;i < length;++i)
+    var blocks = [], i;
+    for(i = 0;i < length;++i) {
       blocks[i] = message.charCodeAt(i);
+    }
     var ibit = 16 - (length & 15);
-    for(;i < blockCount;++i)
+    for(;i < blockCount;++i) {
       blocks[i] = ibit;
+    }
     return blocks;
   };
   
-  var UTF8toBlocks = function(message) {
-    var uri = encodeURIComponent(message);
-    var blocks = [];
-    for(var i = 0, bytes = 0, length = uri.length;i < length;++i)
-    {
-      var c = uri.charCodeAt(i);
-      if(c == 37) // %
-        blocks[bytes] = (HEX_TABLE[uri.charAt(++i)] << 4) | HEX_TABLE[uri.charAt(++i)];
-      else
-        blocks[bytes] = c;
-      ++bytes;
+  var getBlocksFromUtf8 = function(message) {
+    // a block is 8 bits(1 bytes), a chunk is 128 bits(16 bytes)
+    var bytes = getBytesFromUtf8(message);
+    var length = bytes.length;
+    var chunkCount = (length >> 4) + 1;
+    var blockCount = chunkCount << 4; // chunkCount * 16
+    var blocks = [], i;
+    for(i = 0;i < length;++i) {
+      blocks[i] = bytes[i];
     }
-    var chunkCount = (bytes >> 4) + 1;
-    var blockCount = chunkCount << 4; // chunkCount * 4
-    var ibit = 16 - (bytes & 15);
-    for(var i = bytes;i < blockCount;++i)
+    var ibit = 16 - (length & 15);
+    for(;i < blockCount;++i) {
       blocks[i] = ibit;
+    }
     return blocks;
   };
 
   var appendChecksum = function(M) {
-    var checksum = [];
-    var L = 0;
-    var length = M.length >> 4;
-    for(var i = 0;i < length;++i)
-    {
-      for(var j = 0;j < 16;++j)
-      {
+    var checksum = [], L = 0, length = M.length >> 4, i;
+    for(i = 0;i < length;++i) {
+      for(var j = 0;j < 16;++j) {
         var c = M[(i << 4) + j];
         checksum[j] ^= S[c ^ L];
         L = checksum[j];
       }
     }
     length = M.length;
-    for(var i = 0;i < 16;++i)
+    for(i = 0;i < 16;++i) {
       M[length + i] = checksum[i];
+    }
   };
 
-  if(typeof(module) != 'undefined')
+  if(typeof(module) != 'undefined') {
     module.exports = md2;
-  else if(root)
+  } else if(root) {
     root.md2 = md2;
+  }
 }(this));
-

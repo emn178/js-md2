@@ -1,20 +1,49 @@
 # js-md2
+[![Build Status](https://api.travis-ci.org/emn178/js-md5.png)](https://travis-ci.org/emn178/js-md5)
+[![Build Status](https://coveralls.io/repos/emn178/js-md5/badge.png?branch=master)](https://coveralls.io/r/emn178/js-md5?branch=master)  
+[![NPM](https://nodei.co/npm/js-md5.png?stars&downloads)](https://nodei.co/npm/js-md5/)  
 A simple MD2 hash function for JavaScript supports UTF-8 encoding.
 
-## Install
+## Demo
+[MD2 Online](http://emn178.github.io/online-tools/md2.html)  
+
+## Download
+[Compress](https://raw.github.com/emn178/js-md2/master/build/md2.min.js)  
+[Uncompress](https://raw.github.com/emn178/js-md2/master/src/md2.js)
+
+## Installation
+You can also install js-md2 by using Bower.
+
+    bower install js-md2
+
 For node.js, you can use this command to install:
 
     npm install js-md2
 
 ## Usage
+You could use like this:
+```JavaScript
+md2('Message to hash');
+```
 If you use node.js, you should require the module first:
 ```JavaScript
 md2 = require('js-md2');
 ```
-And you could use like this:
-```JavaScript
-md2('Message to hash');
-```
+
+### Methods
+
+#### md2(str, asciiOnly)
+
+Hash string to md2, set asciiOnly to true for better performace if you ensure input is ascii.
+
+##### *str: `String`*
+
+String to hash.
+
+##### *asciiOnly: `Boolean` (default: `false`)*
+
+Specify the string encoding is ASCII.
+
 ## Example
 Code
 ```JavaScript
@@ -37,15 +66,6 @@ md2('中文');
 Output
 
     7af93c270b0ec392ca2f0d90a927cf8a
-
-## Tests
-You can open `tests/index.html` in browser or use node.js to run test
-
-    node tests/node-test.js
-
-or
-
-    npm test
 
 ## Extensions
 ### jQuery

@@ -1,3 +1,3 @@
 md2 = require('../src/md2.js');
-require('./debug.js');
+expect = require('expect.js');
 require('./test.js');
