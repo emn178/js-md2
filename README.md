@@ -30,20 +30,6 @@ If you use node.js, you should require the module first:
 md2 = require('js-md2');
 ```
 
-### Methods
-
-#### md2(str, asciiOnly)
-
-Hash string to md2, set asciiOnly to true for better performace if you ensure input is ascii.
-
-##### *str: `String`*
-
-String to hash.
-
-##### *asciiOnly: `Boolean` (default: `false`)*
-
-Specify the string encoding is ASCII.
-
 ## Example
 Code
 ```JavaScript

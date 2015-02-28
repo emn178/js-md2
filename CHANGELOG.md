@@ -1,3 +1,9 @@
+# v0.2.0 / 2015-02-28
+
+* Remove ascii parameter.
+* Improve performance.
+* Add test case.
+
 # v0.1.2 / 2015-01-07
 
 * Add bower package.

@@ -1,6 +1,6 @@
 {
   "name": "js-md2",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "A simple MD2 hash function for JavaScript supports UTF-8 encoding.",
   "main": "src/md2.js",
   "devDependencies": {
