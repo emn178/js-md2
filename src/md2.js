@@ -3,6 +3,8 @@
  * https://github.com/emn178/js-md2
  *
  * Copyright 2014-2015, emn178@gmail.com
+ * Copyright 2015, joseph.finlayson@gmail.com
+
  *
  * Licensed under the MIT license:
  * http://www.opensource.org/licenses/MIT
@@ -158,7 +160,8 @@
 		define("md2", [], function () {
 			return md2;
 		});
-	} else if (root) {
+	}
+	else if (root) {
 		root.md2 = md2;
 	}
 

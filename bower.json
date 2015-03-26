@@ -1,7 +1,7 @@
 {
   "name": "js-md2",
-  "version": "0.2.0",
-  "main": ["build/md2.min.js"],
+  "version": "0.2.1",
+  "main": ["src/md2.js"],
   "ignore": [
     "samples",
     "tests"
