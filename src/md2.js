@@ -13,7 +13,8 @@
 (function (root, undefined) {
 	'use strict';
 
-	var NODE_JS = typeof(module) != 'undefined';
+
+	var NODE_JS = typeof window === 'undefined';
 	if (NODE_JS) {
 		root = global;
 	}
