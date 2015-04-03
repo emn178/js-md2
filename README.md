@@ -29,6 +29,12 @@ If you use node.js, you should require the module first:
 ```JavaScript
 md2 = require('js-md2');
 ```
+If you use require.js, you should require the module first:
+```JavaScript
+require(['md2.js'], function(md2) {
+  // ...
+});
+```
 
 ## Example
 Code

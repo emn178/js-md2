@@ -1,3 +1,7 @@
+# v0.2.1 / 2015-04-03
+
+* Support AMD.
+
 # v0.2.0 / 2015-02-28
 
 * Remove ascii parameter.
