@@ -1,24 +1,36 @@
-# v0.2.1 / 2015-04-03
+# Change Log
 
-* Support AMD.
+## v0.2.2 / 2017-02-08
+### Fixed
+- `root` is undefined in some special environment.
 
-# v0.2.0 / 2015-02-28
+## v0.2.1 / 2015-04-03
+### Added
+- support AMD.
 
-* Remove ascii parameter.
-* Improve performance.
-* Add test case.
+## v0.2.0 / 2015-02-28
+### Added
+- test cases.
 
-# v0.1.2 / 2015-01-07
+### Removed
+- ascii parameter.
 
-* Add bower package.
-* Fixed JSHint warnings.
-* Add travis.
-* Add coveralls.
+### Improved
+- performance.
 
-# v0.1.1 / 2014-07-27
+## v0.1.2 / 2015-01-07
+### Added
+-  bower package.
+- travis.
+- coveralls.
 
-Fixed accents bug
+### Fixed
+- JSHint warnings.
 
-# v0.1.0 / 2014-01-05
+## v0.1.1 / 2014-07-27
+### Fixed
+- accents bug
 
-Initial release
+## v0.1.0 / 2014-01-05
+### Added
+- initial release.

@@ -12,9 +12,9 @@
   <div id="mocha"></div>
   <script>
     mocha.setup('bdd');
-    require(['../src/md2.js'], function(md2) {
+    require(['../src/md2.js'], function (md2) {
       window.md2 = md2;
-      require(['test.js'], function() {
+      require(['test.js'], function () {
         mocha.checkLeaks();
         mocha.run();
       })
