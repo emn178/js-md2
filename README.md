@@ -6,9 +6,6 @@
 
 A simple MD2 hash function for JavaScript supports UTF-8 encoding.
 
-## Demo
-[MD2 Online](https://emn178.github.io/online-tools/md2.html)  
-
 ## Download
 [Compress](https://raw.github.com/emn178/js-md2/master/build/md2.min.js)  
 [Uncompress](https://raw.github.com/emn178/js-md2/master/src/md2.js)
